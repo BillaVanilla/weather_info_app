@@ -7,7 +7,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,60 +30,85 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-int _counter = 0;
-String cityname = ""; //Storage for city name
-String temperature = "--"; //Holder for temperature
- String weatherCondition = "--"; //holder for condition
+  int _counter = 0;
+  String cityName = ""; // Storage for city name
+  String temperature = "--"; // Placeholder for temperature
+  String weatherCondition = "--"; // Placeholder for condition
 
-void _setWeather(){
-  setstate((){
-    temperature = "25 degrees Celcius";
-    weatherCondition = "Cloudy";
-  });
-}
+  // Function to simulate fetching weather
+  void _setWeather() {
+    setState(() {
+      temperature = "25°C"; // Simulated weather data
+      weatherCondition = "Cloudy"; // Simulated condition
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
       _counter++;
     });
   }
-  ElevatedButton(
-          child: Text('Fetch Weather'),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
-          ),
-          onPressed: () {},
-        ),
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+    appBar: AppBar(
+    backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+    title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                onChanged: (text) {
-                  setState(() {
-                    cityname = text;  // Update city name as user types
-                  });
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Enter name for the city',
-                  border: OutlineInputBorder(),
-                ),
+    body: Center(
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+    // Input field for the city name
+    Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: TextField(
+    onChanged: (text) {
+    setState(() {
+    cityName = text;
+    });
+    },
+    decoration: const InputDecoration(
+    labelText: 'Enter name for the city',
+    border: OutlineInputBorder(),
+        ),
+      ),
+    ),
+      const SizedBox(height: 20),
+          // Weather Button location
+      ElevatedButton(
+      child: const Text('Fetch Weather'),
+          style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
               ),
+              onPressed: _setWeather,
             ),
-            const Text(
+          const SizedBox(height: 20),
+            // Display city name
+        Text(
+              cityName.isNotEmpty ? "Weather in $cityName" : "Enter a city to get weather report",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            //  Shows the current temperature
+        Text(
+              "Temperature: $temperature",
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 10),
+            // Shows the current weather condition
+        Text(
+              "Condition: $weatherCondition",
+              style: const TextStyle(fontSize: 18),
+            ),
+          const SizedBox(height: 20),
+
+            // Displays counter
+          const Text(
               'You have pushed the button this many times:',
             ),
-            Text(
+        Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
@@ -95,7 +119,7 @@ void _setWeather(){
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
