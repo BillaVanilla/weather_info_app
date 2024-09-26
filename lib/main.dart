@@ -35,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String cityName = ""; // Storage for city name
   String temperature = "--"; // Placeholder for temperature
   String weatherCondition = "--"; // Placeholder for condition
+  List<Map<String, String>> Seven_day_forecast = [];
 
   // Function to simulate fetching weather
   void _getWeather() {
@@ -46,6 +47,24 @@ class _MyHomePageState extends State<MyHomePage> {
       weatherCondition = randomCondition;
     });
   }
+
+  void _getForecast() {
+  List<String> conditions = ['Sunny', 'Cloudy', 'Rainy', 'Snowy']; // List of all possible weather effects
+  List<Map<String, String>> newForecast = List.generate(7, (index) {
+  int randomTemp = Random().nextInt(16) + 15; // Functions to randomly generate value between 15-30
+  String randomCondition = conditions[Random().nextInt(conditions.length)]; //Randomly picks weather effects from list
+  return{
+  'Day': 'Day ${index + 1}',
+  'Current Temperature': "$randomTemp°C",
+  'Weather Condition': randomCondition
+    };
+  });
+
+  setState(() {
+      Seven_day_forecast = newForecast;
+    });
+  }
+
 
   void _incrementCounter() {
     setState(() {
@@ -83,21 +102,42 @@ class _MyHomePageState extends State<MyHomePage> {
           // Weather Button location
       
       ElevatedButton(
-      child: const Text('Fetch Weather'),
+      child: const Text('Get Weather'),
           style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.orange,
               ),
               onPressed: _getWeather,
             ),
           const SizedBox(height: 20), // Display city name
-
+      ElevatedButton(
+                child: const Text('Get 7-day Forecast'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.blue,
+                ),
+                onPressed: cityName.isEmpty ? null : _getForecast,
+              ),
+              if (Seven_day_forecast.isNotEmpty) ...[
+                const Text(
+                  "7-Day Weather Forecast",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                for (var day in Seven_day_forecast)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Text(
+                      "${day['day']}: ${day['temperature']}, ${day['condition']}",
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
+              ],
         Text(
               cityName.isNotEmpty ? "Weather in $cityName" : "Enter a city to get weather report",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             //  Shows the current temperature
-  
+
        Text(
               "Temperature: $temperature",
               style: const TextStyle(fontSize: 18),
