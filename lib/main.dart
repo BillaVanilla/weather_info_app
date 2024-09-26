@@ -34,35 +34,38 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+String cityname = ""; //Storage for city name
   void _incrementCounter() {
     setState(() {
-
       _counter++;
     });
   }
-String value = "";
-TextField(
-  onChanged: (text) {
-    value = text;
-  },
-)
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
- 
         title: Text(widget.title),
       ),
       body: Center(
- 
         child: Column(
- 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                onChanged: (text) {
+                  setState(() {
+                    cityname = text;  // Update city name as user types
+                  });
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Enter name for the city',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
             const Text(
               'You have pushed the button this many times:',
             ),
