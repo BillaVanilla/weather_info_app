@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -36,10 +37,13 @@ class _MyHomePageState extends State<MyHomePage> {
   String weatherCondition = "--"; // Placeholder for condition
 
   // Function to simulate fetching weather
-  void _setWeather() {
-    setState(() {
-      temperature = "25°C"; // Simulated weather data
-      weatherCondition = "Cloudy"; // Simulated condition
+  void _getWeather() {
+  List<String> conditions = ['Sunny', 'Cloudy', 'Rainy']; // List of all possible weather effects
+  int randomTemp = Random().nextInt(16) + 15; // Functions to randomly generate value between 15-30
+  String randomCondition = conditions[Random().nextInt(conditions.length)]; //Randomly picks weather effects from list
+  setState(() {
+      temperature = "$randomTemp degrees Celcius";
+      weatherCondition = randomCondition;
     });
   }
 
@@ -77,22 +81,24 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
       const SizedBox(height: 20),
           // Weather Button location
+      
       ElevatedButton(
       child: const Text('Fetch Weather'),
           style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
+                foregroundColor: Colors.orange,
               ),
-              onPressed: _setWeather,
+              onPressed: _getWeather,
             ),
-          const SizedBox(height: 20),
-            // Display city name
+          const SizedBox(height: 20), // Display city name
+
         Text(
               cityName.isNotEmpty ? "Weather in $cityName" : "Enter a city to get weather report",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             //  Shows the current temperature
-        Text(
+  
+       Text(
               "Temperature: $temperature",
               style: const TextStyle(fontSize: 18),
             ),
@@ -103,9 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
               style: const TextStyle(fontSize: 18),
             ),
           const SizedBox(height: 20),
-
             // Displays counter
-          const Text(
+        const Text(
               'You have pushed the button this many times:',
             ),
         Text(
