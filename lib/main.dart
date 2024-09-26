@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // Function to simulate fetching weather
   void _getWeather() {
-  List<String> conditions = ['Sunny', 'Cloudy', 'Rainy']; // List of all possible weather effects
+  List<String> conditions = ['Sunny', 'Cloudy', 'Rainy', 'Snowy']; // List of all possible weather effects
   int randomTemp = Random().nextInt(16) + 15; // Functions to randomly generate value between 15-30
   String randomCondition = conditions[Random().nextInt(conditions.length)]; //Randomly picks weather effects from list
   setState(() {
