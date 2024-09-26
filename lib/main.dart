@@ -24,8 +24,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  
-
   final String title;
 
   @override
@@ -33,13 +31,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+int _counter = 0;
 String cityname = ""; //Storage for city name
+String temperature = "--"; //Holder for temperature
+ String weatherCondition = "--"; //holder for condition
+
+void _setWeather(){
+  setstate((){
+    temperature = "25 degrees Celcius";
+    weatherCondition = "Cloudy";
+  });
+}
+
   void _incrementCounter() {
     setState(() {
       _counter++;
     });
   }
+  ElevatedButton(
+          child: Text('Fetch Weather'),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.blue,
+          ),
+          onPressed: () {},
+        ),
 
   @override
   Widget build(BuildContext context) {
